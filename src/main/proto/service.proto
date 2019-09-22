@@ -1,0 +1,44 @@
+syntax = "proto3";
+package test.task;
+
+message Campus {
+    string id = 1;
+    string name = 2;
+    map<string, Room> rooms = 3;
+
+    message Room {
+        int32 id = 1;
+        repeated Site sites = 2;
+        repeated GatewayPosition gatewayPositions = 3;
+    }
+
+    message Site {
+        int32 id = 1;
+        string type = 2;
+        string position = 3;
+        bool occupied = 4;
+    }
+
+    message GatewayPosition {
+        int32 id = 1;
+        string type = 2;
+        int32 installDate = 3;
+    }
+}
+
+message ImportRequest {
+    string id = 1;
+}
+
+message ExportRequest {
+    string id = 1;
+}
+
+message ExportResult {
+    string result = 1;
+}
+
+service MapExporter {
+    rpc importCampus(ImportRequest) returns (Campus);
+    rpc exportCampus(ExportRequest) returns (ExportResult);
+}
